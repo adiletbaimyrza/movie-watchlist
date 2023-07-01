@@ -1,7 +1,13 @@
+{% from "macros/svgs.html" import moon %}
+{% from "macros/svgs.html" import sun %}
+
 {% macro header(email, theme) %}
 <header class="header">
     <div class="nav-container">
         <a href="{{ url_for('pages.index') }}" class="header__logo">
+            <svg xmlns="http://www.w3.org/2000/svg" class="logo__icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z" />
+            </svg>
             <span class="logo__name">Movie Watchlist</span>
         </a>
         <nav class="nav">
@@ -13,9 +19,6 @@
                     class="nav__link {{ 'nav__link--active' if request.path == url_for('pages.index')}}"
                     href="{{ url_for('pages.index') }}"
                     >
-                    <svg xmlns="http://www.w3.org/2000/svg" class="logo__icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z" />
-                    </svg>
                     <span class="nav__item">Movies</span>
                 </a>
                 <a
@@ -23,6 +26,18 @@
                     href="#"
                     >
                     <span class="nav__item">Log out</span>
+                </a>
+                <a
+                    class="nav__link"
+                    href="{{ url_for('pages.toggle_theme', current_page=request.path) }}"
+                >
+                    <span class="nav__item">
+                        {% if theme == "dark" %}
+                            {{ sun('nav__icon')}}
+                        {% else %}
+                            {{ moon('nav__icon')}}
+                        {% endif %}
+                    </span>
                 </a>
             {% endif %}
         </nav>
