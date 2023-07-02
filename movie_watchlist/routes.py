@@ -1,6 +1,8 @@
-from flask import Blueprint, render_template, session, redirect, request
+from flask import Blueprint, render_template, session, redirect, request, current_app, url_for
 from movie_watchlist.forms import MovieForm
-
+import uuid
+from movie_watchlist.models import Movie
+from dataclasses import asdict
 
 pages = Blueprint("pages", __name__, template_folder="templates", static_folder="static")
 
@@ -13,7 +15,16 @@ def add_movie():
     form = MovieForm()
     
     if form.validate_on_submit():
-        pass
+        movie = Movie(
+            _id=uuid.uuid4().hex,
+            title=form.title.data,
+            director=form.director.data,
+            year=form.year.data
+        )
+        
+        current_app.db.movies.insert_one(asdict(movie))
+        
+        return redirect(url_for(".index"))
     
     return render_template("new_movie.html", title="Movie Watchlist - Add Movie", form=form)
 
