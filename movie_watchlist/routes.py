@@ -8,7 +8,10 @@ pages = Blueprint("pages", __name__, template_folder="templates", static_folder=
 
 @pages.route("/")
 def index():
-    return render_template("index.html", title = "Movie Watchlist")
+    movies_data = current_app.db.movies.find({})
+    movies = [Movie(**movie) for movie in movies_data]
+    
+    return render_template("index.html", title = "Movie Watchlist", movies_data=movies)
 
 @pages.route("/add", methods=["GET", "POST"])
 def add_movie():

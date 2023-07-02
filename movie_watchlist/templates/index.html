@@ -1,1 +1,37 @@
 {% extends "layout.html" %}
+
+{% block head_content %}
+
+{% endblock head_content %}
+
+{% block main_content %}
+    {% if movies_data %}
+        <table class="table">
+            <colgroup>
+                <col style="width: 60%">
+                <col style="width: 25%">
+                <col style="width: 15%">
+            </colgroup>
+
+            <thead>
+                <th class="table__cell table__cell--header">Title</th>
+                <th class="table__cell table__cell--header">Release Date</th>
+                <th class="table__cell table__cell--header"></th>
+            </thead>
+
+            <tbody>
+                {% for movie in movies %}
+                    <tr>
+                        <td class="table__cell">
+                            <p class="table__movieTitle">{{ movie.title }}</p>
+                            <p class="table__movieDirector">{{ movie.director }}</p>
+                        </td>
+                        <td class="table__cell">{{ movie.year }}</td>
+                        <td class="table__cell"><a href="#" class="table__link">View</a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+    {% endif %}
+{% endblock main_content %}
