@@ -12,7 +12,7 @@ def index():
 def add_movie():
     form = MovieForm()
     
-    if request.method == "POST":
+    if form.validate_on_submit():
         pass
     
     return render_template("new_movie.html", title="Movie Watchlist - Add Movie", form=form)
