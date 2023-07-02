@@ -1,0 +1,13 @@
+{% from "macros/fields.html" import render_text_field %}
+
+{% extends "layout.html" %}
+
+{% block main_content %}
+<form name="add_movie" method="POST" novalidate class="form">
+    <div class="form__container">
+        {{ render_text_field(form.title) }}
+        {{ render_text_field(form.director) }}
+        {{ render_text_field(form.year) }}
+    </div>
+</form>
+{% endblock main_content %}
