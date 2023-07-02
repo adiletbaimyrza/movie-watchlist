@@ -5,6 +5,7 @@
 {% block main_content %}
 <form name="add_movie" method="POST" novalidate class="form">
     <div class="form__container">
+        {{ form.hidden_tag }}
         {{ render_text_field(form.title) }}
         {{ render_text_field(form.director) }}
         {{ render_text_field(form.year) }}
