@@ -15,7 +15,7 @@ def add_movie():
     if request.method == "POST":
         pass
     
-    return render_template("new_movie.html", title="Movie Watchlist - Add Movie")
+    return render_template("new_movie.html", title="Movie Watchlist - Add Movie", form=form)
 
 
 
