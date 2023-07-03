@@ -11,7 +11,7 @@ def index():
     movies_data = current_app.db.movies.find({})
     movies = [Movie(**movie) for movie in movies_data]
     
-    return render_template("index.html", title = "Movie Watchlist", movies_data=movies)
+    return render_template("index.html", title = "Movie Watchlist", movies=movies)
 
 @pages.route("/add", methods=["GET", "POST"])
 def add_movie():
