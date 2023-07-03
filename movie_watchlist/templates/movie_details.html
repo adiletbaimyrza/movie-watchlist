@@ -57,7 +57,7 @@
         {% if movie.description %}
             <p class="movie__description">{{ movie.description }}</p>
         {% else %}
-            <p class="movie__description">No description yet. <a class="link" href="#">Add one?</a></p>
+            <p class="movie__description">No description yet. <a class="link" href="{{ url_for('pages.edit_movie', _id=movie._id) }}">Add one?</a></p>
         {% endif %}
 
         <div class="movie__meta">
