@@ -3,3 +3,4 @@
 .env
 .flaskenv
 movie_watchlist/__pycache__/
+*.pyc
