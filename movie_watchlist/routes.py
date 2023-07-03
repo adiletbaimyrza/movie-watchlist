@@ -31,7 +31,11 @@ def add_movie():
     
     return render_template("new_movie.html", title="Movie Watchlist - Add Movie", form=form)
 
-
+@pages.route("/movie/<string:_id>")
+def movie(_id: str):
+    movie_data = current_app.db.movies.find_one({"_id": _id})
+    movie = Movie(**movie_data)
+    return render_template("movie_details.html", movie=movie)
 
 
 
