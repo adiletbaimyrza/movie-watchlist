@@ -22,9 +22,8 @@ def login_required(route):
 @pages.route("/")
 @login_required
 def index():
-    user_data = current_app.db.users.find({"email": session["email"]})
+    user_data = current_app.db.users.find_one({"email": session["email"]})
     user = User(**user_data)
-    
     
     movies_data = current_app.db.movies.find({"_id": {"$in" : user.movies}})
     movies = [Movie(**movie) for movie in movies_data]
