@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import IntegerField, StringField, SubmitField, TextAreaField, URLField
-from wtforms.validators import InputRequired, NumberRange
+from wtforms import IntegerField, StringField, SubmitField, TextAreaField, URLField, PasswordField
+from wtforms.validators import InputRequired, NumberRange, Email, Length, EqualTo
 
 
 class MovieForm(FlaskForm):
@@ -36,3 +36,26 @@ class ExtendedMovieForm(MovieForm):
     video_link = URLField("Video Link")
     
     submit = SubmitField("Submit")
+    
+class RegisterForm(FlaskForm):
+    email = StringField(validators=[InputRequired(), Email()])
+    password = PasswordField(
+        validators=[
+            InputRequired(),
+            Length(
+                min=4,
+                max=20,
+                message="Your password must be between 4 and 20 characters long."
+            )
+        ]
+    )
+    confirm_password = PasswordField(
+        validators=[
+            InputRequired(),
+            EqualTo(
+                "password",
+                message="This password didn't match the one provided in the password field."
+            )
+        ]
+    )
+    submit = SubmitField("Register")
