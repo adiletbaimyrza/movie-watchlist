@@ -23,7 +23,10 @@ def login_required(route):
 @login_required
 def index():
     user_data = current_app.db.users.find_one({"email": session["email"]})
-    user = User(**user_data)
+    if user_data is None:
+        return redirect(url_for(".login"))
+    else:
+        user = User(**user_data)
     
     movies_data = current_app.db.movies.find({"_id": {"$in" : user.movies}})
     movies = [Movie(**movie) for movie in movies_data]
@@ -55,6 +58,7 @@ def register():
 @pages.route("/login", methods=["GET", "POST"])
 def login():
     if session.get("email"):
+        print(session.get("email"))
         return redirect(url_for(".index"))
 
     form = LoginForm()
