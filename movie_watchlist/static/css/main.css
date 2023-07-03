@@ -48,12 +48,6 @@ html {
     }
 }
 
-@media screen and (min-width: 75em) {
-    html {
-        font-size: 18px;
-    }
-}
-
 body {
     display: flex;
     flex-direction: column;
