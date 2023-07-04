@@ -9,6 +9,8 @@ import functools
 
 pages = Blueprint("pages", __name__, template_folder="templates", static_folder="static")
 
+
+
 def login_required(route):
     @functools.wraps(route)
     def route_wrapper(*args, **kwargs):
@@ -22,13 +24,16 @@ def login_required(route):
 @pages.route("/")
 @login_required
 def index():
-    user_data = current_app.db.users.find_one({"email": session["email"]})
+    users = current_app.db["users"]
+    movies = current_app.db["movies"]
+    
+    user_data = users.find_one({"email": session["email"]})
     if user_data is None:
         return redirect(url_for(".login"))
     else:
         user = User(**user_data)
     
-    movies_data = current_app.db.movies.find({"_id": {"$in" : user.movies}})
+    movies_data = movies.find({"_id": {"$in" : user.movies}})
     movies = [Movie(**movie) for movie in movies_data]
     
     return render_template("index.html", title = "Movie Watchlist | Home", movies=movies)
@@ -47,7 +52,8 @@ def register():
             password=pbkdf2_sha256.hash(form.password.data)
         )
         
-        current_app.db.users.insert_one(asdict(user))
+        users = current_app.db["users"]
+        users.insert_one(asdict(user))
         
         flash("User registered successfully!", "success")
         
@@ -64,7 +70,8 @@ def login():
     form = LoginForm()
 
     if form.validate_on_submit():
-        user_data = current_app.db.users.find_one({"email": form.email.data})
+        users = current_app.db["users"]
+        user_data = users.find_one({"email": form.email.data})
         if not user_data:
             flash("Login credentials not correct", category="danger")
             return redirect(url_for(".login"))
